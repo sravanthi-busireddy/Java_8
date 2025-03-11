@@ -27,12 +27,49 @@ public class StreamSort {
 		System.out.println(list4);
 		
 		List<Product> productList=new ArrayList<Product>();
-		productList.add(new Product(1,"Sravs",25000f));
-		productList.add(new Product(2,"uday",30000f));
-		productList.add(new Product(3,"Rani",35000f));
+		productList.add(new Product(1,"Sravs",35000f));
+		productList.add(new Product(2,"uday",32000f));
+		productList.add(new Product(3,"Rani",20000f));
 		
-	}
+		//using Comparator get Price in A.O
+		List<Product> listProducts= productList.stream().sorted(new Comparator<Product>() {
+
+			@Override
+			public int compare(Product o1, Product o2) {
+				return  (int) (o1.getPrice()-o2.getPrice());
+			}
+		}	).collect(Collectors.toList());
+		System.out.println(listProducts);
+		
+	//[Product [id=3, name=Rani, price=20000.0], Product [id=2, name=uday, price=32000.0], Product [id=1, name=Sravs, price=35000.0]]
+	   
+	//using Comparator get Price in D.O
+			List<Product> listProducts1= productList.stream().sorted(new Comparator<Product>() {
+
+				@Override
+				public int compare(Product o1, Product o2) {
+					return  (int) (o2.getPrice()-o1.getPrice());
+				}
+			}	).collect(Collectors.toList());
+			System.out.println(listProducts1);
+	//[Product [id=1, name=Sravs, price=35000.0], Product [id=2, name=uday, price=32000.0], Product [id=3, name=Rani, price=20000.0]]
+			
+			//Names in A.O
+			List<Product> listProducts3= productList.stream().sorted(Comparator.comparing(Product::getName)).collect(Collectors.toList());
+			System.out.println(listProducts3);
+			//[Product [id=3, name=Rani, price=20000.0], Product [id=1, name=Sravs, price=35000.0], Product [id=2, name=uday, price=32000.0]]
+			
+			//Names in D.O
+			List<Product> listProducts4= productList.stream().sorted(Comparator.comparing(Product::getName).reversed()).collect(Collectors.toList());
+			System.out.println(listProducts4);
+			//[Product [id=2, name=uday, price=32000.0], Product [id=1, name=Sravs, price=35000.0], Product [id=3, name=Rani, price=20000.0]]
+			
+			List<Product> listProducts5= productList.stream().sorted(Comparator.comparingInt(Product::getId).reversed()).collect(Collectors.toList());
+			System.out.println(listProducts5);
+			//[Product [id=3, name=Rani, price=20000.0], Product [id=2, name=uday, price=32000.0], Product [id=1, name=Sravs, price=35000.0]]
+	}	
+}
 	
 
-}
+
 
